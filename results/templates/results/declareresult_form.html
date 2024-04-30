@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block top_js %}
+    <!-- Include additional JavaScript libraries or scripts specific to this template -->
+    <script src="path/to/your/script.js"></script>
+{% endblock top_js %}
+
+{% block main_page_title %}
+    {{ main_page_title }}
+{% endblock main_page_title %}
+
+{% block breadcrumb %}
+    <li><a href="{% url 'results:result_list' %}">{{ panel_name }}</a></li>
+    <li class="active">{{ panel_title }}</li>
+{% endblock breadcrumb %}
+
+{% block panel %}
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h5>{{ panel_title }}</h5>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" method="post" data-url="{{ request.build_absolute_uri | safe }}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="ajax_load">
+                        <div class="form-group">
+                            <label for="marks" class="col-sm-2 control-label">Marks:</label>
+                            <div class="col-sm-10" id="add_field">
+                                <input type="number" name="marks" id="marks" class="form-control">
+                            </div>
+                        </div>
+                        <input type="submit" value="Save" name="save" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock panel %}
+
+{% block javascript_code %}
+    <script>
+        // Add JavaScript code for handling AJAX requests and form submission
+        // Example:
+        // $('#myForm').submit(function(e) {
+        //     e.preventDefault();
+        //     // AJAX request handling
+        // });
+    </script>
+{% endblock javascript_code %}
